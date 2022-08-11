@@ -3,12 +3,18 @@
 .categories {
   ul {
     display: flex;
+    gap: 10px;
+    justify-content: space-between;
+
+    @media (max-width: 565px) {
+      height: 280px;
+      overflow: scroll;
+    }
 
     li {
       background-color: #f9f9f9;
       padding: 13px 30px;
       border-radius: 30px;
-      margin-right: 10px;
       font-weight: bold;
       cursor: pointer;
       transition: background-color 0.1s ease-in-out;
@@ -25,6 +31,11 @@
       &.active {
         background-color: #282828;
         color: #fff;
+      }
+
+      @media (max-width: 565px) {
+        width: 100%;
+        text-align: center;
       }
     }
   }

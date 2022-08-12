@@ -8,10 +8,10 @@ body {
 }
 
 .wrapper {
-  width: calc(100vw - 100px);
+  width: calc(100vw - 50px);
   height: 100%;
   background-color: #fff;
-  margin: 50px auto;
+  margin: 25px auto;
   border-radius: 10px;
   max-width: 1400px;
 
@@ -33,7 +33,7 @@ body {
   &__items {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(2, 1fr);
+    grid-template-rows: repeat(1, 1fr);
     grid-column-gap: 20px;
     grid-row-gap: 20px;
 

@@ -3,9 +3,9 @@ import { useState } from 'react';
 function Sort({ value, onClickSort }) {
   const [isVisible, setIsVisible] = useState(false);
   const sortList = [
-    { name: 'популярности', sortProp: 'rating' },
-    { name: 'цене', sortProp: 'price' },
-    { name: 'алфавиту', sortProp: 'name' },
+    { name: 'rating', sortProp: 'rating' },
+    { name: 'price', sortProp: 'price' },
+    { name: 'name', sortProp: 'name' },
   ];
 
   const onSelectedSortItem = (index) => {
@@ -27,7 +27,7 @@ function Sort({ value, onClickSort }) {
             fill="#2C2C2C"
           />
         </svg>
-        <b>Сортировка по:</b>
+        <b>Sort by:</b>
         <span onClick={() => setIsVisible(!isVisible)}>{value.name}</span>
       </div>
       {isVisible ? (

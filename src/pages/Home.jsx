@@ -1,4 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+
+import { AppContext } from '../App';
 
 import Categories from '../components/Categories';
 import Sort from '../components/Sort';
@@ -6,13 +8,14 @@ import PizzaBlock from '../components/PizzaBlock';
 import Skeleton from '../components/PizzaBlock/Skeleton';
 import Pagination from '../components/Pagination';
 
-function Home({ searchValue }) {
+function Home() {
+  const { searchValue } = useContext(AppContext);
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [categoryId, setCategoryId] = useState(0);
   const [sortType, setSortType] = useState({
-    name: 'популярности',
+    name: 'rating',
     sortProp: 'rating',
   });
 

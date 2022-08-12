@@ -13,6 +13,10 @@
     &:focus {
         border: 1px solid rgba(0,0,0,0.2);
     }
+
+    @media (max-width: 565px) {
+        width: 300px;
+    }
 }
 
 .icon {

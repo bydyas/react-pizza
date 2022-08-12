@@ -5,7 +5,7 @@ function PizzaBlock({ name, imageUrl, price, sizes, types }) {
   const [activeType, setActiveType] = useState(types[0]);
   const [activeSize, setActiveSize] = useState(0);
 
-  const typeNames = ['тонкое', 'традиционное'];
+  const typeNames = ['thin', 'traditional'];
 
   return (
     <div className="pizza-block-wrapper">
@@ -29,13 +29,13 @@ function PizzaBlock({ name, imageUrl, price, sizes, types }) {
                 key={index}
                 className={activeSize === index ? 'active' : ''}
                 onClick={() => setActiveSize(index)}>
-                {size} см.
+                {size} cm.
               </li>
             ))}
           </ul>
         </div>
         <div className="pizza-block__bottom">
-          <div className="pizza-block__price">от {price} ₽</div>
+          <div className="pizza-block__price">at $ {price}</div>
           <button
             onClick={() => setPizzaCount(pizzaCount + 1)}
             className="button button--outline button--add">
@@ -50,7 +50,7 @@ function PizzaBlock({ name, imageUrl, price, sizes, types }) {
                 fill="white"
               />
             </svg>
-            <span>Добавить</span>
+            <span>Add</span>
             <i>{pizzaCount}</i>
           </button>
         </div>

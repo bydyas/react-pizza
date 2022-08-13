@@ -1,6 +1,8 @@
 import { useState, useEffect, useContext } from 'react';
 
 import { AppContext } from '../App';
+import { useSelector, useDispatch } from 'react-redux';
+import { setCategoryID } from '../redux/slices/filterSlice';
 
 import Categories from '../components/Categories';
 import Sort from '../components/Sort';
@@ -9,15 +11,13 @@ import Skeleton from '../components/PizzaBlock/Skeleton';
 import Pagination from '../components/Pagination';
 
 function Home() {
+  const { categoryID, sort } = useSelector((state) => state.filter);
+  const dispatch = useDispatch();
+
   const { searchValue } = useContext(AppContext);
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
-  const [categoryId, setCategoryId] = useState(0);
-  const [sortType, setSortType] = useState({
-    name: 'rating',
-    sortProp: 'rating',
-  });
 
   const pizzas = data
     .filter((item) => item.name.toLowerCase().includes(searchValue.toLowerCase()))
@@ -29,8 +29,8 @@ function Home() {
 
     fetch(
       `https://62f273e3b1098f1508132820.mockapi.io/items?page=${currentPage}&limit=4&category=${
-        categoryId ? categoryId : ''
-      }&sortBy=${sortType.sortProp}&order=desc`,
+        categoryID ? categoryID : ''
+      }&sortBy=${sort.sortProp}&order=desc`,
     )
       .then((res) => res.json())
       .then((res) => {
@@ -39,13 +39,17 @@ function Home() {
       })
       .catch(console.log);
     window.scrollTo(0, 0);
-  }, [categoryId, sortType, currentPage]);
+  }, [categoryID, sort, currentPage]);
+
+  const onClickCategory = (i) => {
+    dispatch(setCategoryID(i));
+  };
 
   return (
     <div className="container">
       <div className="content__top">
-        <Categories value={categoryId} onClickCategory={setCategoryId} />
-        <Sort value={sortType} onClickSort={setSortType} />
+        <Categories value={categoryID} onClickCategory={onClickCategory} />
+        <Sort />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">{isLoading ? skeletons : pizzas}</div>

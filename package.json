@@ -38,5 +38,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "description": "study project via react\\redux\\ts",
+  "main": "index.js",
+  "repository": "git@github.com:bydyas/react-pizza.git",
+  "author": "Bohdan Shkaran <bogdan.shkaran@gmail.com>",
+  "license": "MIT"
 }

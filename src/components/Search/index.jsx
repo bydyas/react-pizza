@@ -1,10 +1,31 @@
-import { useContext } from 'react';
+import { useCallback, useContext, useRef, useState } from 'react';
+import debounce from 'lodash.debounce';
 import { AppContext } from '../../App';
 
 import styles from './Search.module.scss';
 
 function Search() {
-  const { searchValue, setSearchValue } = useContext(AppContext);
+  const [debounceValue, setDebounceValue] = useState('');
+  const { setSearchValue } = useContext(AppContext);
+  const inputRef = useRef();
+
+  const onClickClear = () => {
+    setSearchValue('');
+    inputRef.current.focus();
+  };
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const onDebounceUpdateInput = useCallback(
+    debounce((val) => {
+      setSearchValue(val);
+    }, 500),
+    [],
+  );
+
+  const onChangeInput = (event) => {
+    setDebounceValue(event.target.value);
+    onDebounceUpdateInput(event.target.value);
+  };
 
   return (
     <div className={styles.root}>
@@ -42,15 +63,16 @@ function Search() {
         />
       </svg>
       <input
-        value={searchValue}
-        onChange={(event) => setSearchValue(event.target.value)}
+        ref={inputRef}
+        value={debounceValue}
+        onChange={onChangeInput}
         className={styles.input}
         placeholder="Search for pizza..."
         type="text"
       />
-      {searchValue ? (
+      {debounceValue ? (
         <svg
-          onClick={() => setSearchValue('')}
+          onClick={onClickClear}
           className={styles.close}
           version="1.1"
           viewBox="0 0 512 512"

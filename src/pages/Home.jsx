@@ -1,4 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
+import axios from 'axios';
 
 import { AppContext } from '../App';
 import { useSelector, useDispatch } from 'react-redux';
@@ -27,17 +28,19 @@ function Home() {
   useEffect(() => {
     setIsLoading(true);
 
-    fetch(
-      `https://62f273e3b1098f1508132820.mockapi.io/items?page=${currentPage}&limit=4&category=${
-        categoryID ? categoryID : ''
-      }&sortBy=${sort.sortProp}&order=desc`,
-    )
-      .then((res) => res.json())
+    const category = categoryID ? `&category=${categoryID}` : '';
+    const sortPlaceholder = `&sortBy=${sort.sortProp}`;
+    const order = `&order=desc`;
+
+    axios
+      .get(
+        `https://62f273e3b1098f1508132820.mockapi.io/items?page=${currentPage}&limit=4${category}${sortPlaceholder}${order}`,
+      )
       .then((res) => {
-        setData(res);
+        setData(res.data);
         setIsLoading(false);
-      })
-      .catch(console.log);
+      });
+
     window.scrollTo(0, 0);
   }, [categoryID, sort, currentPage]);
 

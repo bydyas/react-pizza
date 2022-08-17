@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import { AppContext } from '../App';
 import { useSelector, useDispatch } from 'react-redux';
-import { setCategoryID } from '../redux/slices/filterSlice';
+import { setCategoryID, setCurrentPage } from '../redux/slices/filterSlice';
 
 import Categories from '../components/Categories';
 import Sort from '../components/Sort';
@@ -12,13 +12,13 @@ import Skeleton from '../components/PizzaBlock/Skeleton';
 import Pagination from '../components/Pagination';
 
 function Home() {
-  const { categoryID, sort } = useSelector((state) => state.filter);
+  const { categoryID, sort, currentPage } = useSelector((state) => state.filter);
   const dispatch = useDispatch();
 
   const { searchValue } = useContext(AppContext);
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [currentPage, setCurrentPage] = useState(1);
+  // const [currentPage, setCurrentPage] = useState(1);
 
   const pizzas = data
     .filter((item) => item.name.toLowerCase().includes(searchValue.toLowerCase()))
@@ -44,19 +44,15 @@ function Home() {
     window.scrollTo(0, 0);
   }, [categoryID, sort, currentPage]);
 
-  const onClickCategory = (i) => {
-    dispatch(setCategoryID(i));
-  };
-
   return (
     <div className="container">
       <div className="content__top">
-        <Categories value={categoryID} onClickCategory={onClickCategory} />
+        <Categories value={categoryID} onClickCategory={(i) => dispatch(setCategoryID(i))} />
         <Sort />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">{isLoading ? skeletons : pizzas}</div>
-      <Pagination onChangePage={setCurrentPage} />
+      <Pagination onChangePage={(num) => dispatch(setCurrentPage(num))} />
     </div>
   );
 }

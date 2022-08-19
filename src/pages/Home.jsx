@@ -22,7 +22,7 @@ function Home() {
 
   const pizzas = data
     .filter((item) => item.name.toLowerCase().includes(searchValue.toLowerCase()))
-    .map(({ id, ...item }) => <PizzaBlock key={id} {...item} />);
+    .map((item) => <PizzaBlock key={item.id} {...item} />);
   const skeletons = [...new Array(8)].map((_, index) => <Skeleton key={index} />);
 
   useEffect(() => {

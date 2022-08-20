@@ -2,7 +2,7 @@ import { useEffect, useContext } from 'react';
 
 import { AppContext } from '../App';
 import { useSelector, useDispatch } from 'react-redux';
-import { setCategoryID, setCurrentPage } from '../redux/slices/filterSlice';
+import { filterSelector, setCategoryID, setCurrentPage } from '../redux/slices/filterSlice';
 
 import Categories from '../components/Categories';
 import Sort from '../components/Sort';
@@ -12,7 +12,7 @@ import Pagination from '../components/Pagination';
 import { fetchPizzas } from '../redux/slices/pizzaSlice';
 
 function Home() {
-  const { categoryID, sort, currentPage } = useSelector((state) => state.filter);
+  const { categoryID, sort, currentPage } = useSelector(filterSelector);
   const { items, status } = useSelector((state) => state.pizza);
   const dispatch = useDispatch();
 
